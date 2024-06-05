@@ -5,6 +5,14 @@ import java.awt.*;
 import java.util.Random;
 
 public class Ball {
+    public static final int MAX_X = 800;
+    public static final int MAX_Y = 800;
+    public static final int MIN_Y = 0;
+    public static final int MIN_X = 0;
+    public static final int MAX_SIZE = 40;
+    public static final int MIN_SIZE = 10;
+    public static final int MAX_SPEED = 5;
+    public static final int MIN_SPEED = -5;
     public double x;
     public double y;
     public int size;
@@ -13,11 +21,11 @@ public class Ball {
     public Color color;
     public Ball(){
         Random random = new Random();
-        this.x = random.nextInt(500 - 0 + 1) + 0;
-        this.y = random.nextInt(500 - 0 + 1) + 0;
-        this.size = random.nextInt(50-20+1)+20;
-        this.speedX = random.nextInt(5- (-5)+1)-5;
-        this.speedY = random.nextInt(5- (-5) +1)-5;
+        this.x = random.nextInt(MAX_X - MIN_X + 1) + MIN_X;
+        this.y = random.nextInt(MAX_Y - MIN_Y + 1) + MIN_Y;
+        this.size = random.nextInt(MAX_SIZE - MIN_SIZE +1)+ MIN_SIZE;
+        this.speedX = random.nextInt(MAX_SPEED - MIN_SPEED+1)+ MIN_SPEED;
+        this.speedY = random.nextInt(MAX_SPEED- MIN_SPEED +1) + MIN_SPEED;
         this.color = randomColor();
     }
 
@@ -32,7 +40,7 @@ public class Ball {
     public boolean intersect(Ball anotherBall) {
         double d = Math.sqrt(Math.pow(anotherBall.x-this.x,2)+Math.pow(anotherBall.y-this.y,2));
         if(d<=anotherBall.size+this.size){
-            System.out.println("INTERSECTED");
+//            System.out.println("INTERSECTED");
             return true;
         }
         return false;

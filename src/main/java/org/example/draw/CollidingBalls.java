@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollidingBalls extends JFrame {
-    private List<Ball> balls = new ArrayList<>();
-    private int ballTwoSpeedY = 5;
+    public static final int BALL_COUNT = 20;
+    private final List<Ball> balls = new ArrayList<>();
     private float ovalScale = 1.2f;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 800;
@@ -24,7 +24,7 @@ public class CollidingBalls extends JFrame {
         setTitle("Bouncing Ball");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        for(int i=0; i<10;i++){
+        for(int i = 0; i< BALL_COUNT; i++){
             balls.add(new Ball());
         }
         Timer timer = new Timer(10, new ActionListener() {
@@ -78,6 +78,16 @@ public class CollidingBalls extends JFrame {
         double distance = Math.sqrt(Math.pow(normalX,2)+Math.pow(normalY,2));
         normalX /=distance;
         normalY /=distance;
+
+    // Calculate overlap distance
+        double overlap = ball.size + anotherBall.size - distance;
+
+    // Separate the balls to eliminate overlap
+        anotherBall.x -= overlap * normalX / 2;
+        anotherBall.y -= overlap * normalY / 2;
+        ball.x += overlap * normalX / 2;
+        ball.y += overlap * normalY / 2;
+
         double tangentX = -normalY;
         double tangentY = normalX;
         // Dot product of velocity and normal/tangent vectors
@@ -97,6 +107,8 @@ public class CollidingBalls extends JFrame {
         anotherBall.speedY = anotherBallVyNormal + v1Tangent * tangentY;
         ball.speedX = ballVxNormal + v2Tangent * tangentX;
         ball.speedY = ballVyNormal + v2Tangent * tangentY;
+        ball.color = anotherBall.color;
+//        anotherBall.size = ball.size;
 
     }
 
@@ -110,11 +122,11 @@ public class CollidingBalls extends JFrame {
     private void drawBall(Graphics g, Ball ball) {
         // Draw the shadow
         g.setColor(Color.BLACK);
-        drawOval(g, ball.x -(ball.size/2)+ SHADOW_OFFSET, ball.y -(ball.size/2)+ SHADOW_OFFSET, ball.size, ball.size);
+        drawOval(g, ball.x -((double) ball.size /2)+ SHADOW_OFFSET, ball.y -((double) ball.size /2)+ SHADOW_OFFSET, ball.size, ball.size);
 
         // Draw the ball
         g.setColor(ball.color);
-        drawOval(g, ball.x -(ball.size/2), ball.y-(ball.size/2), ball.size, ball.size);
+        drawOval(g, ball.x -((double) ball.size /2), ball.y-((double) ball.size /2), ball.size, ball.size);
     }
 
 
