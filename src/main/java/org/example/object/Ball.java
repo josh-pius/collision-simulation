@@ -5,8 +5,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class Ball {
-    public static final int MAX_X = 800;
-    public static final int MAX_Y = 800;
+    public static final int MAX_X = 1800;
+    public static final int MAX_Y = 1000;
     public static final int MIN_Y = 0;
     public static final int MIN_X = 0;
     public static final int MAX_SIZE = 40;
